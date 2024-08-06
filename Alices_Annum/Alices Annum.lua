@@ -173,7 +173,7 @@ local annum_jokers =
 	loc_txt = {
 		name = 'Earth Worm',
 		text = {'{C:attention}WIP{}',
-		'Cards{C:attention}held in hand{}',
+		'Cards {C:attention}held in hand{}',
 		'become {C:attention}Stone{} cards',
 		'after hand is played'}
 	},
