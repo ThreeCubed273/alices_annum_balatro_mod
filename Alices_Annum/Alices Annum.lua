@@ -2,7 +2,7 @@
 --- MOD_NAME: Alices Annum
 --- MOD_ID: Annum
 --- MOD_AUTHOR: [Alice_Reverie, nhhvhy]
---- MOD_DESCRIPTION: Testing
+--- MOD_DESCRIPTION: Jokers made for the lulz, by the lulz
 --- PREFIX: annum_
 -------------------------------------
 
@@ -146,33 +146,40 @@ local annum_jokers =
 	}
 	
 	-- Honey Bee
+	-- WIP --
 	SMODS.Joker {
 	key = 'key_honey_bee',
 	loc_txt = {
 		name = 'Honey Bee',
-		text = {'WIP'}
+		text = {'{C:attention}WIP{}',
+		'Effect ERROR Unavailable',
+		'Error Code: BZZZ'}
 	},
 	rarity = 2,
-	cost = 6,
+	------------------- cost free until WIP fixed
+	cost = 0,
 	unlocked = true, 
     discovered = true, 
 	atlas = 'Alice Atlas',
 	pos = { x = 3, y = 0 }
-	--calculate = function(self, card, context)
+	-- calculate = function(self, card, context)
 	--	if context.cardarea == G
 	}
 	
 	--Earth Worm
+	-- WIP --
 	SMODS.Joker {
 	key = 'key_earth_worm',
 	loc_txt = {
 		name = 'Earth Worm',
-		text = {'Cards{C:attention}held in hand{}',
+		text = {'{C:attention}WIP{}',
+		'Cards{C:attention}held in hand{}',
 		'become {C:attention}Stone{} cards',
 		'after hand is played'}
 	},
 	rarity = 1,
-	cost = 4,
+	------------------- cost free until WIP fixed
+	cost = 0,
 	unlocked = true,
 	discovered = true,
 	atlas = 'Alice Atlas',
@@ -197,23 +204,28 @@ local annum_jokers =
 
 -- Ideas --
 ---- Octopus
--- Gains +30 chips for each scoring 8. Cu
+-- Gains +30 chips for each scoring 8
+
 ---- Mola Mola / Sun Fish
 -- Spawns 'XIX - The Sun' if played hand contains a two pair.
+
 --- Honey Bee
 -- Has a 1/6 chance to spawn a Polychrome (???) upon playing a 6
 -- Adds a gold seal to all played sixes and threes
 -- All played sixes give x6 mult when scored
--- Retriggers all sixes played and held in hand.\
+-- Retriggers all sixes played and held in hand.
+
 --- Earth Worm
 -- Create a negative Earth card upon playing a full house.
 -- Upgrade level of played hand if it contains a full house.
 -- ** Unenhanced cards held in hand become Stone Cards
 -- Stone Cards give +5$ upon being scored.
+
 --- King Cobra
 -- Kings held in hand have a 1/2 chance to spawn 'VIII - Strength'
+
 --- Hermit Crab
--- Spawns 'The Hermit'
+-- Spawns 'The Hermit' upon 
 
 -- Atlas List --
 
@@ -223,27 +235,3 @@ SMODS.Atlas({
     px = 71,
     py = 95
 }):register()
-	--,
-		--G.E_MANAGER:add_event(Event({
-		--			func = function()
-		--				card:juice_up(0.5, 0.5)
-		--				return true
-		--			end
-		--	})
-		
-	-- SMODS.Joker {
-	-- 	key = 'SJ_U',
-	-- 	atlas = 'SJ_U',
-	-- 	loc_txt = {
-	-- 		name = 'Sly Joker (Uncommon)',
-	-- 		text = {"{C:chips}+100{} chips if played",
-	-- 		"hand contains",
-	-- 		"a {C:attention}Pair{}"}					
-	-- 		}, 
-	-- 	rarity = 2,
-	-- 	cost = 6, 
-	-- 	discovered = true,
-	-- 	post = { x = 2, y = 2 },
-	-- 	config =  {t_chips = 100, type = 'Pair'}
-	-- }
-
