@@ -151,19 +151,33 @@ local annum_jokers =
 	key = 'key_honey_bee',
 	loc_txt = {
 		name = 'Honey Bee',
-		text = {'{C:attention}WIP{}',
-		'Effect ERROR Unavailable',
-		'Error Code: BZZZ'}
+		text = {'Each scoring {C:attention}6{}',
+		'becomes {C:attention}Gold{}'
+		}
 	},
-	rarity = 2,
-	------------------- cost free until WIP fixed
-	cost = 0,
+	rarity = 1,
+	cost = 4,
 	unlocked = true, 
     discovered = true, 
 	atlas = 'Alice Atlas',
-	pos = { x = 3, y = 0 }
-	-- calculate = function(self, card, context)
-	--	if context.cardarea == G
+	pos = { x = 3, y = 0 },
+	calculate = function(self, card, context)
+		if context.cardarea == G.jokers and context.before and not context.blueprint then
+			for k, v in ipairs(context.scoring_hand) do
+				local rank = context.scoring_hand[k]:get_id()
+                if rank == 6 then 
+                    local six_card = context.scoring_hand[k]
+					six_card:set_ability(G.P_CENTERS.m_gold, nil, true)
+					G.E_MANAGER:add_event(Event({
+					func = function()
+						six_card:juice_up()
+						return true
+					end}))
+					card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_gold'), colour = G.C.MONEY})
+                end
+            end
+        end  
+	end
 	}
 	
 	--Earth Worm
@@ -172,60 +186,39 @@ local annum_jokers =
 	key = 'key_earth_worm',
 	loc_txt = {
 		name = 'Earth Worm',
-		text = {'{C:attention}WIP{}',
-		'Cards {C:attention}held in hand{}',
-		'become {C:attention}Stone{} cards',
-		'after hand is played'}
+		text = {
+		'Cards {C:attention}held in hand{} that',
+		'are {C:mult}not{} enhanced',
+		'become {C:attention}Stone{} cards'
+		}
 	},
-	rarity = 1,
-	------------------- cost free until WIP fixed
-	cost = 0,
+	rarity = 2,
+	cost = 6,
 	unlocked = true,
 	discovered = true,
 	atlas = 'Alice Atlas',
 	pos = { x = 4, y = 0 },
 	calculate = function(self, card, context)
-		if context.before and context.cardarea == G.hand and not context.blueprint then
-			for i = 1, #G.hand.cards do
-                if context.other_card.ability.name == nil or 0 then
-                    local v = G.hand.cards[i]
-					v:set_ability(G.P_CENTERS.m_stone, nil, true)
+		if context.before and context.cardarea == G.jokers and not context.blueprint then
+			local cards_changed = 0;
+			for i=1, #G.hand.cards do
+                local stone_card = G.hand.cards[i]
+				if stone_card.ability.effect ~= 'Stone Card' and stone_card.ability.effect == 'Base' then
+					cards_changed = cards_changed + 1
+					stone_card:set_ability(G.P_CENTERS.m_stone, nil, true)
 					G.E_MANAGER:add_event(Event({
 					func = function()
-						v:juice_up()
+						stone_card:juice_up()
 						return true
-					end
-				}))
+					end}))
 				end
+            end
+			if cards_changed >= 1 then
+				card_eval_status_text(card, 'extra', nil, nil, nil, {message = 'Stone', colour = G.C.PURPLE})
 			end
         end  
 	end
 	}
-
--- Ideas --
----- Octopus
--- Gains +30 chips for each scoring 8
-
----- Mola Mola / Sun Fish
--- Spawns 'XIX - The Sun' if played hand contains a two pair.
-
---- Honey Bee
--- Has a 1/6 chance to spawn a Polychrome (???) upon playing a 6
--- Adds a gold seal to all played sixes and threes
--- All played sixes give x6 mult when scored
--- Retriggers all sixes played and held in hand.
-
---- Earth Worm
--- Create a negative Earth card upon playing a full house.
--- Upgrade level of played hand if it contains a full house.
--- ** Unenhanced cards held in hand become Stone Cards
--- Stone Cards give +5$ upon being scored.
-
---- King Cobra
--- Kings held in hand have a 1/2 chance to spawn 'VIII - Strength'
-
---- Hermit Crab
--- Spawns 'The Hermit' upon 
 
 -- Atlas List --
 
