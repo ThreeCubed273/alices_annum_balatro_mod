@@ -8,6 +8,8 @@
 
 local MOD_PREFIX = "annum_"
 
+------- JOKERS -------
+
 local annum_jokers =
 
 	-- Venus Fly Trap
@@ -48,6 +50,7 @@ local annum_jokers =
 		end
 	},
 	
+	-- Octopus
 	-- CODE CREDIT TO: nhhvhy 
 	SMODS.Joker {
         key = 'key_octopus',
@@ -90,14 +93,14 @@ local annum_jokers =
             -- context.other_card:get_id()
             -- card.ability.extra.current = card.ability.extra.current + card.ability.extra.bonus
             if context.cardarea == G.jokers and not context.before and not context.after then
-                if card.ability.prev == 8 then
-                    card.ability.prev = 0
-                        return {
-                            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_level_up_ex'), colour = G.C.CHIPS}),
-                            card = card,
-                            colour = G.C.chips
-                        }
-                end
+              --  if card.ability.prev == 8 then
+              --      card.ability.prev = 0
+              --          return {
+              --              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_level_up_ex'), colour = G.C.CHIPS}),
+              --              card = card,
+              --              colour = G.C.chips
+              --          }
+              --  end
                 return {
                     message = localize{type='variable',key='a_chips',vars={card.ability.extra.current}},
                     colour = G.C.CHIPS,
@@ -151,8 +154,9 @@ local annum_jokers =
 	key = 'key_honey_bee',
 	loc_txt = {
 		name = 'Honey Bee',
-		text = {'Each scoring {C:attention}6{}',
-		'becomes {C:attention}Gold{}'
+		text = {'Played {C:attention}6{}',
+		'become {C:attention}Gold{} upon',
+		'being scored.'
 		}
 	},
 	rarity = 1,
@@ -180,7 +184,7 @@ local annum_jokers =
 	end
 	}
 	
-	--Earth Worm
+	-- Earth Worm
 	-- WIP --
 	SMODS.Joker {
 	key = 'key_earth_worm',
@@ -219,6 +223,55 @@ local annum_jokers =
         end  
 	end
 	}
+	
+	-- Pufferfish
+	SMODS.Joker {
+	key = 'key_pufferfish',
+	loc_txt = {
+		name = 'Pufferfish',
+		text = { 
+		'If played hand contains',
+		'a single {C:attention}face{} card,',
+		'destroy it and create a',
+		'random {C:spectral}Spectral{} card',
+		'{C:inactive}(Must have room)'
+		}
+	},
+	rarity = 3,
+	cost = 8,
+	unlocked = true,
+	discovered = true,
+	atlas = 'Alice Atlas',
+	pos = { x = 5, y = 0 },
+	calculate = function(self, card, context)
+		if context.destroying_card and #context.full_hand == 1 and not context.blueprint then
+			if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+				local playcard = context.full_hand[1]
+				local rank = playcard:get_id()
+				if rank == 11 or rank == 12 or rank == 13 then
+				G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+                                local card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, nil, 'key_pufferfish')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                                G.GAME.consumeable_buffer = 0
+                            return true
+                        end)}))
+                card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					func = function()
+						playcard:start_dissolve()
+					return true
+				end}))
+				end
+			end
+		end
+	end
+	}
+	
 
 -- Atlas List --
 
