@@ -8,6 +8,8 @@
 
 local MOD_PREFIX = "annum_"
 
+------- JOKERS -------
+
 local annum_jokers =
 
 	-- Venus Fly Trap
@@ -48,6 +50,7 @@ local annum_jokers =
 		end
 	},
 	
+	-- Octopus
 	-- CODE CREDIT TO: nhhvhy 
 	SMODS.Joker {
         key = 'key_octopus',
@@ -90,14 +93,14 @@ local annum_jokers =
             -- context.other_card:get_id()
             -- card.ability.extra.current = card.ability.extra.current + card.ability.extra.bonus
             if context.cardarea == G.jokers and not context.before and not context.after then
-                if card.ability.prev == 8 then
-                    card.ability.prev = 0
-                        return {
-                            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_level_up_ex'), colour = G.C.CHIPS}),
-                            card = card,
-                            colour = G.C.chips
-                        }
-                end
+              --  if card.ability.prev == 8 then
+              --      card.ability.prev = 0
+              --          return {
+              --              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_level_up_ex'), colour = G.C.CHIPS}),
+              --              card = card,
+              --              colour = G.C.chips
+              --          }
+              --  end
                 return {
                     message = localize{type='variable',key='a_chips',vars={card.ability.extra.current}},
                     colour = G.C.CHIPS,
@@ -108,6 +111,7 @@ local annum_jokers =
         }
 	
 	-- Sun Fish
+	-- He is perfect
 	SMODS.Joker {
 	key = 'key_sun_fish',
 	loc_txt = {
@@ -146,13 +150,14 @@ local annum_jokers =
 	}
 	
 	-- Honey Bee
-	-- WIP --
+	-- Bugs: Fix timing?
 	SMODS.Joker {
 	key = 'key_honey_bee',
 	loc_txt = {
 		name = 'Honey Bee',
-		text = {'Each scoring {C:attention}6{}',
-		'becomes {C:attention}Gold{}'
+		text = {'Played {C:attention}6{}s',
+		'become {C:attention}Gold{}',
+		'when scored'
 		}
 	},
 	rarity = 1,
@@ -180,8 +185,8 @@ local annum_jokers =
 	end
 	}
 	
-	--Earth Worm
-	-- WIP --
+	-- Earth Worm
+	-- Bugs: Fix cards displaying no art for a sec then turning
 	SMODS.Joker {
 	key = 'key_earth_worm',
 	loc_txt = {
@@ -219,7 +224,134 @@ local annum_jokers =
         end  
 	end
 	}
-
+	
+	-- Pufferfish
+	-- He's Perfect
+	SMODS.Joker {
+	key = 'key_pufferfish',
+	loc_txt = {
+		name = 'Pufferfish',
+		text = { 
+		'If played hand contains',
+		'a single {C:attention}face{} card,',
+		'destroy it and create a',
+		'random {C:spectral}Spectral{} card',
+		'{C:inactive}(Must have room)'
+		}
+	},
+	rarity = 3,
+	cost = 8,
+	unlocked = true,
+	discovered = true,
+	atlas = 'Alice Atlas',
+	pos = { x = 5, y = 0 },
+	calculate = function(self, card, context)
+		if context.destroying_card and #context.full_hand == 1 and not context.blueprint then
+			if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+				local playcard = context.full_hand[1]
+				local rank = playcard:get_id()
+				if rank == 11 or rank == 12 or rank == 13 then
+				G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+                                local card = create_card('Spectral', G.consumeables, nil, nil, nil, nil, nil, 'key_pufferfish')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                                G.GAME.consumeable_buffer = 0
+                            return true
+                        end)}))
+                card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+				G.E_MANAGER:add_event(Event({
+					trigger = 'after',
+					func = function()
+						playcard:start_dissolve()
+					return true
+				end}))
+				end
+			end
+		end
+	end
+	}
+	
+	-- Kiwi
+	SMODS.Joker {
+	key = 'key_kiwi',
+	loc_txt = {
+		name = 'Kiwi',
+		text = {'{C:attention}Decreases{} rank of',
+		'played cards by {C:attention}1{}',
+		'after score is calculated',
+		'{C:inactive}(Cannot go below 2)'
+		}
+	},
+	rarity = 2,
+	cost = 6,
+	unlocked = true,
+	discovered = true,
+	atlas = 'Alice Atlas',
+	pos = { x = 0, y = 7 },
+	-------- TO DO: FIX HAND BEING SCORED _AFTER_
+	calculate = function(card, self, context)
+		if context.after and context.full_hand and not context.blueprint then
+		sendDebugMessage('a')
+			for k, v in pairs(G.play.cards) do
+			local kiwi_card = G.play.cards[k]
+			local rank = kiwi_card:get_id()
+			sendDebugMessage(rank)
+			sendDebugMessage(tostring(kiwi_card))
+				if rank ~= 2 then
+					sendDebugMessage('b')
+					G.E_MANAGER:add_event(Event({
+						sendDebugMessage('b2'),
+						trigger = 'after',
+						delay = 1.2,
+						func = function()
+								-------------
+								sendDebugMessage('delta')
+								local _card = v
+								local suit_prefix = string.sub(_card.base.suit, 1, 1)..'_'
+								local rank_suffix = v.base.id - 1
+								if rank_suffix < 10 then rank_suffix = tostring(rank_suffix)
+								elseif rank_suffix == 10 then rank_suffix = 'T'
+								elseif rank_suffix == 11 then rank_suffix = 'J'
+								elseif rank_suffix == 12 then rank_suffix = 'Q'
+								elseif rank_suffix == 13 then rank_suffix = 'K'
+								elseif rank_suffix == 14 then rank_suffix = 'A'
+								elseif rank_suffix == 15 then rank_suffix = 'A'
+								end
+								_card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
+								--------------
+								local percent = 1.15 - (k - 0.999) / (#G.play.cards - 0.998) * 0.3
+								play_sound('card1', percent)
+								sendDebugMessage('c')
+								v:flip()
+							return true
+						end}))
+					sendDebugMessage('d')
+				end
+			end
+		for k, v in pairs(G.play.cards) do
+			sendDebugMessage(tostring(G.play.cards))
+			sendDebugMessage('alpha')
+				if v.base.id ~= 2 then
+					sendDebugMessage('beta')
+						G.E_MANAGER:add_event(Event({
+						delay = 0.2,
+						trigger = 'before',
+						func = function()
+							local percent = 1.15 - (k - 0.999) / (#G.play.cards - 0.998) * 0.3
+							play_sound('tarot2', percent)
+							sendDebugMessage('gamma')
+							v:flip()
+						return true end }))
+					delay(0.4)
+				end
+			end
+		end
+	end
+	}
+	
 -- Atlas List --
 
 SMODS.Atlas({
