@@ -275,6 +275,7 @@ local annum_jokers =
 	}
 	
 	-- Kiwi
+	-- 'It's a feature'
 	SMODS.Joker {
 	key = 'key_kiwi',
 	loc_txt = {
@@ -290,8 +291,7 @@ local annum_jokers =
 	unlocked = true,
 	discovered = true,
 	atlas = 'Alice Atlas',
-	pos = { x = 0, y = 7 },
-	-------- TO DO: FIX HAND BEING SCORED _AFTER_
+	pos = { x = 6, y = 0 },
 	calculate = function(card, self, context)
 		if context.after and context.full_hand and not context.blueprint then
 		sendDebugMessage('a')
