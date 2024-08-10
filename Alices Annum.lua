@@ -8,6 +8,28 @@
 
 local MOD_PREFIX = "annum_"
 
+local mod_path = ''..SMODS.current_mod.path
+
+local alice_config = {}
+local read_config = SMODS.load_file("alice_config.lua")
+
+if read_config then
+    alice_config = read_config()
+end
+
+local annum_con =
+	SMODS.ConsumableType {
+		key = 'alice_key_con_fossil',
+		primary_colour = HEX('D17000'),
+		secondary_colour = HEX('D1B492'),
+		loc_txt =
+			{
+			name = 'Fossil',
+			collection = 'Fossil Cards'--,
+		},
+		collection_rows = {6,2}
+	}
+
 ------- JOKERS -------
 
 local annum_jokers =
@@ -29,6 +51,7 @@ local annum_jokers =
 	cost = 8,
 	unlocked=true, 
     discovered=true, 
+	blueprint_compat=true,
 	atlas = 'Alice Atlas',
 	pos = { x = 0, y = 0 },
 	loc_vars = function(self, info_queue, card) return {vars = {card.ability.extra.bonus, card.ability.extra.current}} end,
@@ -65,6 +88,7 @@ local annum_jokers =
         cost = 6,
         unlocked=true,
         discovered=true,
+		blueprint_compat=true,
         atlas = 'Alice Atlas',
         pos = { x = 1, y = 0 },
         loc_vars = function(self, info_queue, card) return {vars = {card.ability.extra.bonus, card.ability.extra.current}} end,
@@ -126,6 +150,7 @@ local annum_jokers =
 	cost = 4,
 	unlocked = true, 
     discovered = true, 
+	blueprint_compat=true,
 	atlas = 'Alice Atlas',
 	pos = { x = 2, y = 0 },
 	calculate = function(self, card, context)
@@ -243,6 +268,7 @@ local annum_jokers =
 	cost = 8,
 	unlocked = true,
 	discovered = true,
+	blueprint_compat=true,
 	atlas = 'Alice Atlas',
 	pos = { x = 5, y = 0 },
 	calculate = function(self, card, context)
@@ -290,6 +316,7 @@ local annum_jokers =
 	cost = 6,
 	unlocked = true,
 	discovered = true,
+	blueprint_compat=true,
 	atlas = 'Alice Atlas',
 	pos = { x = 6, y = 0 },
 	calculate = function(card, self, context)
@@ -351,6 +378,13 @@ local annum_jokers =
 		end
 	end
 	}
+	
+	--SMODS.Joker { 
+		
+	--- uhhh yeah
+	--}
+	
+
 	
 -- Atlas List --
 
