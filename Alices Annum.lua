@@ -7,9 +7,14 @@
 --- PREFIX: annum_
 -------------------------------------
 
--- local debugSay = sendDebugMessage()
+-- Define Mod_Path
 local mod_path = ''..SMODS.current_mod.path
-local mod_prefix = "annum_"
+
+-- Load Files
+--SMODS.load_file('Chunks/AliceFossilJokers.lua')()
+--SMODS.load_file('Chunks/AliceJokers.lua')()
+--SMODS.load_file('Chunks/AliceCons.lua')()
+
 
 -- Configs -- 
 local alice_config = {["Alice Jokers"] = true}
@@ -34,25 +39,36 @@ function get_badge_colour(key)
 end
 
 
+
+
+--SMODS.current_mod.init = function()
+--   local files = NFS.getDirectoryItems(SMODS.current_mod.path.."Chunks")
+--    for _, file in ipairs(files) do
+--        local curr_obj = NFS.load(SMODS.current_mod.path.."Chunks/"..file)()
+--        for _, item in ipairs(curr_obj) do
+--            item:register()
+--        end
+--    end
+--end
+
 -- File loading based on Relic-Jokers
 local files = NFS.getDirectoryItems(mod_path.."Chunks")
 for _, file in ipairs(files) do
     print("Loading file "..file)
     local f, err = NFS.load(mod_path.."Chunks/"..file)
-    if err then print("Error loading file: "..err) else
+    if err 
+		then print("Error loading file: "..err) 
+	else
 		local curr_obj = f()
-		if true then
-			if curr_obj.init then curr_obj:init() end
-		-- for _, item in ipairs(curr_obj.stuffToAdd) do
-		--     if SMODS[item.object_type] then
-		--		if item.object_type == "Joker" and not debugMode then
-		--			item.discovered = false
-		--		end
-		--       SMODS[item.object_type](item)
-		--     else
-		--       print("Error loading item "..item.key.." of unknown type "..item.object_type)
-		--     end
-		--  end
+		if curr_obj.init then 
+			curr_obj:init() 
+		end
+		for _, item in ipairs(curr_obj) do
+			if SMODS[item.object_type] then
+				SMODS[item.object_type](item)
+			else
+			--print("Error loading item "..item.key.." of unknown type "..item.object_type)
+			end
 		end
     end
 end
@@ -63,7 +79,7 @@ local alice_jokers = SMODS.load_file(mod_path.."Chunks".."AliceJokers")
 
 -- FOSSIL JOKERS 
 
---local alice_fossil_jokers = SMODS.load_file(mod_path..'Chunks'..'AliceFossilJokers')
+local alice_fossil_jokers = SMODS.load_file(mod_path..'Chunks'..'AliceFossilJokers')
 
 -- CONSUMABLE DEFINE
 
@@ -82,7 +98,7 @@ local alice_cons =
 
 -- CONSUMABLE LOAD
 
-local alice_load_cons = SMODS.load_file(mod_path.."Files".."AliceCons")
+local alice_load_cons = SMODS.load_file(mod_path.."Chunks".."AliceCons")
 
 -- Atlas List --
 
@@ -99,7 +115,6 @@ SMODS.Atlas({
 --    px = 71,
 --    py = 95
 --}):register()
-
 
 SMODS.Atlas({
     key = "Alice Cons",

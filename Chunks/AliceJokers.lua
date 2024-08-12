@@ -1,6 +1,6 @@
 ------- JOKERS -------
 
-return{
+return {
 	sendDebugMessage('Jokers activated'),
 	-- Venus Fly Trap
 	SMODS.Joker {
@@ -345,5 +345,25 @@ return{
 			end
 		end
 	end
+	},
+	
+	-- Cactus
+	-- 'Gain Mult from Club Chips'
+	SMODS.Joker {
+		key = 'key_cactus',
+		loc_txt = {
+			name = 'Cactus',
+			text = {'Gains {C:mult}+Mult{} {C:attention}equal{}',
+			'to {C:attention}scoring{} {C:clubs}Club{} cards {C:attention}rank{}',
+			'{C:inactive}(Currently{} {C:mult}+#1#{} {C:inactive}mult){}'
+			}
+		},
+		rarity = 2,
+		cost = 6,
+		unlocked = true,
+		discovered = true,
+		blueprint_compat=true,
+		atlas = 'Alice Atlas',
+		pos = { x = 7, y = 0 }
 	}
 }

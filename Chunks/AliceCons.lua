@@ -1,6 +1,6 @@
 -- ALICE CONSUMABLES --
 
-return{
+return {
 	-- Anomalacaris / 'Odd Fossil'
 	-- All played poker hands are now straights or higher
 	SMODS.Consumable {

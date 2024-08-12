@@ -1,6 +1,6 @@
 -- FOSSIL JOKERS
 
---return { 
+return { 
 --	SMODS.Joker {
 --	key = 'key_anoma_joker',
 --	loc_txt = {
@@ -37,4 +37,4 @@
 --		--	end
 --		--end
 --	}
---}
+}
