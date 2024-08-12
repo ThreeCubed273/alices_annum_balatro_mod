@@ -353,7 +353,8 @@ return {
 		key = 'key_cactus',
 		loc_txt = {
 			name = 'Cactus',
-			text = {'Gains {C:mult}+Mult{} {C:attention}equal{}',
+			text = {'{C:attention}NO EFFECT YET{}',
+			'Gains {C:mult}+Mult{} {C:attention}equal{}',
 			'to {C:attention}scoring{} {C:clubs}Club{} cards {C:attention}rank{}',
 			'{C:inactive}(Currently{} {C:mult}+#1#{} {C:inactive}mult){}'
 			}
