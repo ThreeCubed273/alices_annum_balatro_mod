@@ -345,10 +345,5 @@ return{
 			end
 		end
 	end
-	}--,
-	
-	--SMODS.Joker { 
-		
-	--- uhhh yeah
-	--}
+	}
 }

@@ -1,0 +1,40 @@
+-- FOSSIL JOKERS
+
+--return { 
+--	SMODS.Joker {
+--	key = 'key_anoma_joker',
+--	loc_txt = {
+--		name = 'Anomalacaris',
+--		text = {'All played {C:attention}poker hands{}',
+--		'now contain {C:attention}straights{}'
+--		}
+--	},
+--	rarity = "alice_fossil_tier",
+--	cost = 25,
+--	unlocked = true,
+--	discovered = true,
+--	blueprint_compat=true,
+--	--atlas = 'Alice Atlas',
+--	pos = { x = 0, y = 0 },
+--	calculate = function(self, card, context)
+--		local evaluate_poker_hand_ref = evaluate_poker_hand
+--		sendDebugMessage('A')
+--		sendDebugMessage(tostring(evaluate_poker_hand_ref))
+--		function evaluate_poker_hand(hand)
+--			sendDebugMessage('B')
+--			local ret = evaluate_poker_hand_ref(hand)
+--			sendDebugMessage(tostring(ret))
+--			evaluate_poker_hand.parts = {_straight}
+--			ret = evaluate_poker_hand.parts
+--			sendDebugMessage('C')
+--			end
+--		return ret
+--		end
+--		--if context.scoring_hand and not context.blueprint then
+--		--	local poker_hand = evaluate_poker_hand(hand)
+--		--	poker_hand = G.PLAY.hands["Straight"] ---????
+--		--	return poker_hand
+--		--	end
+--		--end
+--	}
+--}
