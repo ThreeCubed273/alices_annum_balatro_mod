@@ -45,15 +45,15 @@ return {
 	-- CODE CREDIT TO: nhhvhy 
 	SMODS.Joker {
         key = 'key_octopus',
-        config = {extra = { bonus = 30, current = 20 }, prev = 0},
+        config = {extra = { bonus = 8, current = 16 }}, --prev = 0
         loc_txt = {
             name = 'Octopus',
             text = { 'Gains {C:chips}+#1#{} Chips for',
             'each scoring {C:attention}8{}',
             '{C:inactive}(Currently {C:chips}+#2#{} Chips)'}
         },
-        rarity = 2,
-        cost = 6,
+        rarity = 3,
+        cost = 8,
         unlocked=true,
         discovered=true,
 		blueprint_compat=true,
@@ -61,38 +61,17 @@ return {
         pos = { x = 1, y = 0 },
         loc_vars = function(self, info_queue, card) return {vars = {card.ability.extra.bonus, card.ability.extra.current}} end,
         calculate = function(self, card, context)
-            if context.individual and not context.blueprint then 
+            if context.individual and context.cardarea == G.play and not context.blueprint then 
                 local rank = context.other_card:get_id()
-                if card.ability.prev == 8 then
-                    card.ability.prev = 0
-                    if rank == 8 then
-                        card.ability.extra.current = card.ability.extra.current + card.ability.extra.bonus
-                        card.ability.prev = 8
-                    end
-						return {
-							card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_level_up_ex'), colour = G.C.CHIPS}),
-							card = card,
-							colour = G.C.chips
-						}
+                if rank == 8 then
+                    card.ability.extra.current = card.ability.extra.current + card.ability.extra.bonus
+					return {
+						extra = {focus = card, message = '+'..tostring(card.ability.extra.bonus)..' Chips', colour = G.C.CHIPS},
+						card = card
+					}
                 end
-                if context.cardarea == G.play then 
-                    if rank == 8 then
-                        card.ability.extra.current = card.ability.extra.current + card.ability.extra.bonus
-                    end
-                end
-                card.ability.prev = rank
             end
-            -- context.other_card:get_id()
-            -- card.ability.extra.current = card.ability.extra.current + card.ability.extra.bonus
             if context.cardarea == G.jokers and not context.before and not context.after then
-              --  if card.ability.prev == 8 then
-              --      card.ability.prev = 0
-              --          return {
-              --              card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_level_up_ex'), colour = G.C.CHIPS}),
-              --              card = card,
-              --              colour = G.C.chips
-              --          }
-              --  end
                 return {
                     message = localize{type='variable',key='a_chips',vars={card.ability.extra.current}},
                     colour = G.C.CHIPS,
@@ -100,7 +79,7 @@ return {
                 }
                 end
             end
-        },
+    },
 	
 	-- Sun Fish
 	-- He is perfect
@@ -361,10 +340,46 @@ return {
 		},
 		rarity = 2,
 		cost = 6,
+		config = {extra = {current = 5.0}},
 		unlocked = true,
 		discovered = true,
 		blueprint_compat=true,
 		atlas = 'Alice Atlas',
-		pos = { x = 7, y = 0 }
+		pos = { x = 7, y = 0 },
+		loc_vars = function(self, info_queue, card) return {vars = {card.ability.extra.current}} end,
+		calculate = function(card, self, context)
+		if context.individual and context.cardarea == G.play and not context.blueprint then
+			local rank_increase = context.other_card:get_id()
+			if context.other_card:is_suit("Clubs") then
+				if rank_increase > 10 and rank_increase < 14 then
+					rank_increase = 10
+				elseif rank_increase == 14 then
+					rank_increase = 11
+				end
+				self.ability.extra.current = self.ability.extra.current + rank_increase
+				return {
+					--message = ('+'..tostring(self.ability.extra.current)),
+					extra = {focus = self, message = '+'..tostring(rank_increase)..' Mult', colour = G.C.MULT},
+					card = card
+					--card_eval_status_text(self, 'extra', nil, nil, nil, {message = '+'..tostring(rank_increase)..' Mult', colour = G.C.MULT}),
+				}
+			end
+		end
+		--if context.individual and context.calculate_joker then 
+		--	return {
+		--		--message = ('+'..tostring(self.ability.extra.current)),
+		--		card = self,
+		--		card_eval_status_text(self, 'extra', nil, nil, nil, {message = '+'..tostring(rank_increase)..' Mult', colour = G.C.MULT}),
+		--		delay(0.5)
+		--	}
+		--end
+		if context.cardarea == G.jokers and context.joker_main then
+			return {
+                  -- card_eval_status_text(card, 'extra', nil, nil, nil, {message = tostring(self.ability.extra.current)}),
+				message = localize{type='variable',key='a_mult',vars={self.ability.extra.current}},
+				mult_mod = self.ability.extra.current,
+			}
+			end
+		end
 	}
 }

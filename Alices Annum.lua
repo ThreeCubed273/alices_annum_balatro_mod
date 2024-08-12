@@ -4,7 +4,8 @@
 --- MOD_AUTHOR: [Alice_Reverie, nhhvhy]
 --- MOD_DESCRIPTION: Jokers made for the lulz, by the lulz
 --- BADGE_COLOUR: 03A100
---- PREFIX: annum_
+--- PRIORITY: 1
+--- PREFIX: annum
 -------------------------------------
 
 -- Define Mod_Path
@@ -37,9 +38,6 @@ function get_badge_colour(key)
     if key == 'alice_fossil_tier' then return G.C.RARITY["alice_fossil_tier"] end
     return fromRef
 end
-
-
-
 
 --SMODS.current_mod.init = function()
 --   local files = NFS.getDirectoryItems(SMODS.current_mod.path.."Chunks")
@@ -81,24 +79,26 @@ local alice_jokers = SMODS.load_file(mod_path.."Chunks".."AliceJokers")
 
 local alice_fossil_jokers = SMODS.load_file(mod_path..'Chunks'..'AliceFossilJokers')
 
+-- W I P CONSUMABLES
+
 -- CONSUMABLE DEFINE
 
-local alice_cons =
-	SMODS.ConsumableType {
-		key = 'alice_fossil_cards',
-		primary_colour = HEX('D17000'),
-		secondary_colour = HEX('D1B492'),
-		loc_txt =
-			{
-			name = 'Fossil',
-			collection = 'Fossil Cards'
-		},
-		collection_rows = {6,2}
-	}
-
--- CONSUMABLE LOAD
-
-local alice_load_cons = SMODS.load_file(mod_path.."Chunks".."AliceCons")
+-- local alice_cons =
+-- 	SMODS.ConsumableType {
+-- 		key = 'alice_fossil_cards',
+-- 		primary_colour = HEX('D17000'),
+-- 		secondary_colour = HEX('D1B492'),
+-- 		loc_txt =
+-- 			{
+-- 			name = 'Fossil',
+-- 			collection = 'Fossil Cards'
+-- 		},
+-- 		collection_rows = {6,2}
+-- 	}
+-- 
+-- -- CONSUMABLE LOAD
+-- 
+-- local alice_load_cons = SMODS.load_file(mod_path.."Chunks".."AliceCons")
 
 -- Atlas List --
 
