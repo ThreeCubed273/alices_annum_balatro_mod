@@ -10,6 +10,7 @@
 
 -- Define Current Mod
 alice_annum_mod = SMODS.current_mod
+alice_debug = true
 
 -- Custom Raritys (Thank you cryptid)
 Game:set_globals()
@@ -39,9 +40,16 @@ function SMODS.injectItems()
 	end
 	return m
 end
-	
 
--- JOKER LOADING
+-- MOD ICON
+SMODS.Atlas{
+    key = "modicon",
+    path = "alice_modicon.png",
+    px = 34,
+    py = 34,
+}
+
+-- NATURE JOKERS
 
 local alice_nature_jokers = SMODS.load_file("/Chunks/AliceNatureJokers.lua")()
 
@@ -49,26 +57,87 @@ local alice_nature_jokers = SMODS.load_file("/Chunks/AliceNatureJokers.lua")()
 
 local alice_fossil_jokers = SMODS.load_file('Chunks/AliceFossilJokers.lua')()
 
+---- MOON CARDS
+
+local alice_moon_cards = SMODS.load_file('Chunks/AliceMoonCards.lua')()
+
+------ Define Poker Hand Functions
+-- Most Played Poker Hand
+function get_most_played_poker_hand()
+	local result_hand = 'High Card'
+	local played_hand_count = 0
+	for _, v in ipairs(G.handlist) do
+		if G.GAME.hands[v].played > played_hand_count then
+			result_hand = v
+			played_hand_count = G.GAME.hands[v].played
+		end
+	end
+	return result_hand
+end
+
+-- Least Played Poker Hand
+function get_least_played_poker_hand()
+	local result_hand = 'High Card'
+	local played_hand_count = math.huge
+	for _, v in ipairs(G.handlist) do
+		if G.GAME.hands[v].played <= played_hand_count then
+			result_hand = v
+			played_hand_count = G.GAME.hands[v].played
+		end
+	end
+	return result_hand
+end
+
+-- Level of Most Played Poker Hand
+function most_played_poker_hand_level()
+	local result_level = 1
+	local played_hand_count = 0
+	for _, v in ipairs(G.handlist) do
+		if G.GAME.hands[v].played > played_hand_count then
+			result_level = G.GAME.hands[v].level
+			played_hand_count = G.GAME.hands[v].played
+		end
+	end
+	return result_level
+end
+	
+-- Level of Least Played Poker Hand
+function least_played_poker_hand_level()
+	local result_level = 1
+	local played_hand_count = math.huge
+	for _, v in ipairs(G.handlist) do
+		if G.GAME.hands[v].played <= played_hand_count then
+			result_level = G.GAME.hands[v].level
+			played_hand_count = G.GAME.hands[v].played
+		end
+	end
+	return result_level
+end
+
+----
+
 -- W I P CONSUMABLES
 
 -- CONSUMABLE DEFINE
 
-local alice_cons =
-	SMODS.ConsumableType {
-		key = 'alice_fossil_cards',
-		primary_colour = HEX('D17000'),
-		secondary_colour = HEX('D1B492'),
-		loc_txt =
-			{
-			name = 'Fossil',
-			collection = 'Fossil Cards'
-		},
-		collection_rows = {6,2}
-	}
+if alice_annum_mod.config.alice_fossil_jokers then
+	local alice_cons =
+		SMODS.ConsumableType {
+			key = 'alice_fossil_cards',
+			primary_colour = HEX('D17000'),
+			secondary_colour = HEX('D1B492'),
+			loc_txt =
+				{
+				name = 'Fossil',
+				collection = 'Fossil Cards'
+			},
+			collection_rows = {6,2}
+		}
+end
 
 -- CONSUMABLE LOAD
 
-local alice_fossil_cons = SMODS.load_file("Chunks/AliceCons.lua")()
+local alice_fossil_cons = SMODS.load_file("Chunks/AliceFossilCons.lua")()
 
 -- Atlas List --
 
@@ -100,6 +169,15 @@ alice_annum_mod.config_tab = function()
             }},
             {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
                 { n = G.UIT.T, config = { text = "Enable Fossil Jokers", scale = 0.45, colour = G.C.UI.TEXT_LIGHT }},
+            }},
+        }},
+		
+		{n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+            {n = G.UIT.C, config = { align = "cl", padding = 0.05 }, nodes = {
+                create_toggle{ col = true, label = "", scale = 1, w = 0, shadow = true, ref_table = alice_annum_mod.config, ref_value = "alice_moon_cards" },
+            }},
+            {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = "Enable Moon Cards", scale = 0.45, colour = G.C.UI.TEXT_LIGHT }},
             }},
         }},
 

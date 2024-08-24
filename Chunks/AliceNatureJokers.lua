@@ -1,7 +1,7 @@
 ------- NATURE JOKERS -------
 
 SMODS.Atlas({
-    key = "Alice Atlas",
+    key = "Alice Nature Atlas",
     path = "Alice Nature Jokers.png",
     px = 71,
     py = 95
@@ -27,7 +27,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 	unlocked=true, 
 	discovered=true, 
 	blueprint_compat=true,
-	atlas = 'Alice Atlas',
+	atlas = 'Alice Nature Atlas',
 	pos = { x = 0, y = 0 },
 	loc_vars = function(self, info_queue, card) return {vars = {card.ability.extra.bonus, card.ability.extra.current}} end,
 	calculate = function(self, card, context)
@@ -64,7 +64,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 		unlocked=true,
 		discovered=true,
 		blueprint_compat=true,
-		atlas = 'Alice Atlas',
+		atlas = 'Alice Nature Atlas',
 		pos = { x = 1, y = 0 },
 		loc_vars = function(self, info_queue, card) return {vars = {card.ability.extra.bonus, card.ability.extra.current}} end,
 		calculate = function(self, card, context)
@@ -105,7 +105,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 	unlocked = true, 
 	discovered = true, 
 	blueprint_compat=true,
-	atlas = 'Alice Atlas',
+	atlas = 'Alice Nature Atlas',
 	pos = { x = 2, y = 0 },
 	calculate = function(self, card, context)
 		if context.cardarea == G.jokers and context.joker_main and not context.blueprint
@@ -143,7 +143,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 	cost = 4,
 	unlocked = true, 
 	discovered = true, 
-	atlas = 'Alice Atlas',
+	atlas = 'Alice Nature Atlas',
 	pos = { x = 3, y = 0 },
 	calculate = function(self, card, context)
 		if context.cardarea == G.jokers and context.before and not context.blueprint then
@@ -180,7 +180,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 	cost = 6,
 	unlocked = true,
 	discovered = true,
-	atlas = 'Alice Atlas',
+	atlas = 'Alice Nature Atlas',
 	pos = { x = 4, y = 0 },
 	calculate = function(self, card, context)
 		if context.before and context.cardarea == G.jokers and not context.blueprint then
@@ -223,7 +223,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 	unlocked = true,
 	discovered = true,
 	blueprint_compat=true,
-	atlas = 'Alice Atlas',
+	atlas = 'Alice Nature Atlas',
 	pos = { x = 5, y = 0 },
 	calculate = function(self, card, context)
 		if context.destroying_card and #context.full_hand == 1 and not context.blueprint then
@@ -271,7 +271,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 	unlocked = true,
 	discovered = true,
 	blueprint_compat=true,
-	atlas = 'Alice Atlas',
+	atlas = 'Alice Nature Atlas',
 	pos = { x = 6, y = 0 },
 	calculate = function(card, self, context)
 		if context.after and context.full_hand and not context.blueprint then
@@ -351,7 +351,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 		unlocked = true,
 		discovered = true,
 		blueprint_compat=true,
-		atlas = 'Alice Atlas',
+		atlas = 'Alice Nature Atlas',
 		pos = { x = 7, y = 0 },
 		loc_vars = function(self, info_queue, card) return {vars = {card.ability.extra.current}} end,
 		calculate = function(card, self, context)

@@ -15,8 +15,8 @@ if alice_annum_mod.config.alice_fossil_jokers then
 			name = 'Anomalacaris',
 			text = {'If played {C:attention}scoring hand{} contains a {C:attention}Straight{},',
 			'all played cards for the rest of the round',
-			'become {C:dark_edition}Polychrome{} cards.',
-			'{C:inactive}(Does not replace editions){}',
+			'become {C:dark_edition}Polychrome{} cards.'
+			--'{C:inactive}(Does not replace editions){}',
 			}
 		},
 		config = {extra = {active = 0}},
@@ -43,7 +43,7 @@ if alice_annum_mod.config.alice_fossil_jokers then
 						local scored_card = context.scoring_hand[k]
 						if not (v.edition and v.edition.polychrome) then
 							scored_card:set_edition({polychrome = true}, nil, true)
-								G.E_MANAGER:add_event(Event({
+							G.E_MANAGER:add_event(Event({
 								func = function()
 									scored_card:juice_up()
 									return true
