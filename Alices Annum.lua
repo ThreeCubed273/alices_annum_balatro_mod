@@ -114,6 +114,17 @@ function least_played_poker_hand_level()
 	return result_level
 end
 
+-- Get Last Played Poker Hand Count
+function last_played_poker_hand_count()
+	local result_count = 0
+	local last_hand = G.GAME.last_hand_played
+	if last_hand ~= nil then
+		result_count = G.GAME.hands[last_hand].played
+	end
+	return result_count
+end
+
+
 ----
 
 -- W I P CONSUMABLES

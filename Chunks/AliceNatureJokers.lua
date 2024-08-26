@@ -350,7 +350,7 @@ if alice_annum_mod.config.alice_nature_jokers then
 		config = {extra = {current = 5.0}},
 		unlocked = true,
 		discovered = true,
-		blueprint_compat=true,
+		blueprint_compat = true,
 		atlas = 'Alice Nature Atlas',
 		pos = { x = 7, y = 0 },
 		loc_vars = function(self, info_queue, card) return {vars = {card.ability.extra.current}} end,
