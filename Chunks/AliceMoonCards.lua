@@ -49,15 +49,15 @@ if alice_annum_mod.config.alice_moon_cards then
 			local least_hand = get_least_played_poker_hand()
 			
 			for _, hand in ipairs(G.handlist) do
-				sendDebugMessage(tostring(hand))
-				sendDebugMessage(tostring(most_played_poker_hand_level()))
+				--sendDebugMessage(tostring(hand))
+				--sendDebugMessage(tostring(most_played_poker_hand_level()))
 				if hand == most_hand then
 					card.ability.extra.most_level = most_played_poker_hand_level()
-					sendDebugMessage(tostring(G.GAME.hands[hand].level))
+					--sendDebugMessage(tostring(G.GAME.hands[hand].level))
 				end
 				if hand == least_hand then
 					card.ability.extra.least_level = least_played_poker_hand_level()
-					sendDebugMessage(tostring(G.GAME.hands[hand].level))
+					--sendDebugMessage(tostring(G.GAME.hands[hand].level))
 				end
 			end
 			
@@ -74,7 +74,8 @@ if alice_annum_mod.config.alice_moon_cards then
 		loc_txt = {
 			name = 'Io',
 			text = {'{C:attention}Averages{} level of',
-			'all poker hands'},
+			'all poker hands',
+			'{C:inactive}(Rounded up){}'},
 		},
 		set = ('Planet'),
 		atlas = "Alice Moon Atlas",
@@ -95,16 +96,16 @@ if alice_annum_mod.config.alice_moon_cards then
 					poker_hand_count = poker_hand_count + 1
 					poker_hand_total_level = poker_hand_total_level + G.GAME.hands[hand].level
 				end
-				sendDebugMessage(tostring(poker_hand_count))
-				sendDebugMessage(tostring(poker_hand_total_level))
+				--sendDebugMessage(tostring(poker_hand_count))
+				--sendDebugMessage(tostring(poker_hand_total_level))
 			end
-			sendDebugMessage('Before ---' .. tostring(poker_hand_total_level))
+			--sendDebugMessage('Before ---' .. tostring(poker_hand_total_level))
 			poker_hand_total_level = (poker_hand_total_level / poker_hand_count)
-			sendDebugMessage('After ---' .. tostring(poker_hand_total_level))
+			--sendDebugMessage('After ---' .. tostring(poker_hand_total_level))
 			for _, hand in ipairs(G.handlist) do
 				local poker_hand_difference = 0
 				poker_hand_difference = math.ceil(poker_hand_total_level - G.GAME.hands[hand].level)
-				sendDebugMessage(tostring(poker_hand_difference))
+				--sendDebugMessage(tostring(poker_hand_difference))
 				if math.abs(poker_hand_difference) > 0 and G.GAME.hands[hand].visible then
 					update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(hand, 'poker_hands'),chips = G.GAME.hands[hand].chips, mult = G.GAME.hands[hand].mult, level=G.GAME.hands[hand].level})
 					level_up_hand(card, hand, nil, math.ceil(poker_hand_difference))
