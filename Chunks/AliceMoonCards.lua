@@ -64,6 +64,24 @@ if alice_annum_mod.config.alice_moon_cards then
             update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(most_hand, 'poker_hands'),chips = G.GAME.hands[most_hand].chips, mult = G.GAME.hands[most_hand].mult, level=G.GAME.hands[most_hand].level})
 			level_up_hand(card, most_hand, nil, math.ceil(card.ability.extra.least_level))
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+		end,
+		bulk_use = function(self, card, area, copier, number)
+		
+			local most_hand = get_most_played_poker_hand()
+			local least_hand = get_least_played_poker_hand()
+			
+			for _, hand in ipairs(G.handlist) do
+				if hand == most_hand then
+					card.ability.extra.most_level = most_played_poker_hand_level()
+				end
+				if hand == least_hand then
+					card.ability.extra.least_level = least_played_poker_hand_level()
+				end
+			end
+			
+            update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(most_hand, 'poker_hands'),chips = G.GAME.hands[most_hand].chips, mult = G.GAME.hands[most_hand].mult, level=G.GAME.hands[most_hand].level})
+			level_up_hand(card, most_hand, nil, math.ceil(card.ability.extra.least_level) * number)
+			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 		end
 	}
 	
@@ -149,6 +167,15 @@ if alice_annum_mod.config.alice_moon_cards then
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(last_hand, 'poker_hands'),chips = G.GAME.hands[last_hand].chips, mult = G.GAME.hands[last_hand].mult, level=G.GAME.hands[last_hand].level})
 			level_up_hand(card, last_hand, nil, math.ceil(G.GAME.hands[last_hand].played))
 			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+		end,
+		bulk_use = function(self, card, area, copier, number)
+			local last_hand = G.GAME.last_hand_played
+			local times_played = G.GAME.hands[last_hand].played
+			
+			sendDebugMessage(tostring(last_hand))
+			update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize(last_hand, 'poker_hands'),chips = G.GAME.hands[last_hand].chips, mult = G.GAME.hands[last_hand].mult, level=G.GAME.hands[last_hand].level})
+			level_up_hand(card, last_hand, nil, math.ceil(G.GAME.hands[last_hand].played) * number)
+			update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 		end
 	}
 	
@@ -181,6 +208,9 @@ if alice_annum_mod.config.alice_moon_cards then
 		end,
 		use = function(self, card, area, copier)
 			ease_dollars(least_played_poker_hand_level())
+		end,
+		bulk_use = function(self, card, area, copier, number)
+			ease_dollars(least_played_poker_hand_level() * number)
 		end
 	}
 end
