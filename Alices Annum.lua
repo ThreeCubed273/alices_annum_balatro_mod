@@ -4,7 +4,7 @@
 --- MOD_AUTHOR: [Alice_Reverie, nhhvhy, eremel_]
 --- MOD_DESCRIPTION: Jokers made for the lulz, by the lulz
 --- BADGE_COLOUR: 03A100
---- PRIORITY: 1
+--- PRIORITY: -5
 --- PREFIX: annum
 -------------------------------------
 
@@ -60,6 +60,10 @@ local alice_fossil_jokers = SMODS.load_file('Chunks/AliceFossilJokers.lua')()
 ---- MOON CARDS
 
 local alice_moon_cards = SMODS.load_file('Chunks/AliceMoonCards.lua')()
+
+---- TAROT CARDS
+
+local alice_tarot_cards = SMODS.load_file('Chunks/AliceTarotCards.lua')()
 
 ------ Define Poker Hand Functions
 -- Most Played Poker Hand
@@ -124,40 +128,37 @@ function last_played_poker_hand_count()
 	return result_count
 end
 
-
-----
-
--- W I P CONSUMABLES
+-- W I P FOSSILS
 
 -- CONSUMABLE DEFINE
 
-if alice_annum_mod.config.alice_fossil_jokers then
-	local alice_cons =
-		SMODS.ConsumableType {
-			key = 'alice_fossil_cards',
-			primary_colour = HEX('D17000'),
-			secondary_colour = HEX('D1B492'),
-			loc_txt =
-				{
-				name = 'Fossil',
-				collection = 'Fossil Cards'
-			},
-			collection_rows = {6,2}
-		}
-end
-
--- CONSUMABLE LOAD
-
-local alice_fossil_cons = SMODS.load_file("Chunks/AliceFossilCons.lua")()
-
--- Atlas List --
-
-SMODS.Atlas({
-    key = "Alice Cons",
-    path = "Alice Cons.png",
-    px = 71,
-    py = 95
-})
+--if alice_annum_mod.config.alice_fossil_jokers then
+--	local alice_cons =
+--		SMODS.ConsumableType {
+--			key = 'alice_fossil_cards',
+--			primary_colour = HEX('D17000'),
+--			secondary_colour = HEX('D1B492'),
+--			loc_txt =
+--				{
+--				name = 'Fossil',
+--				collection = 'Fossil Cards'
+--			},
+--			collection_rows = {6,2}
+--		}
+--end
+--
+---- CONSUMABLE LOAD
+--
+--local alice_fossil_cons = SMODS.load_file("Chunks/AliceFossilCons.lua")()
+--
+---- Atlas List --
+--
+--SMODS.Atlas({
+--    key = "Alice Cons",
+--    path = "Alice Cons.png",
+--    px = 71,
+--    py = 95
+--})
 
 -- Config Display --
 
@@ -189,6 +190,15 @@ alice_annum_mod.config_tab = function()
             }},
             {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
                 { n = G.UIT.T, config = { text = "Enable Moon Cards", scale = 0.45, colour = G.C.UI.TEXT_LIGHT }},
+            }},
+        }},
+		
+		{n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+            {n = G.UIT.C, config = { align = "cl", padding = 0.05 }, nodes = {
+                create_toggle{ col = true, label = "", scale = 1, w = 0, shadow = true, ref_table = alice_annum_mod.config, ref_value = "alice_tarot_cards" },
+            }},
+            {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = "Enable Tarot Cards", scale = 0.45, colour = G.C.UI.TEXT_LIGHT }},
             }},
         }},
 
