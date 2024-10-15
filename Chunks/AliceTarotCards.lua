@@ -127,7 +127,7 @@ if alice_annum_mod.config.alice_tarot_cards then
 							-------------
 							--sendDebugMessage('delta')
 							local _card = v
-							local suit_prefix = string.sub(_card.base.suit, 1, 1)..'_'
+							local suit_prefix = SMODS.Suits[_card.base.suit].card_key..'_'
 							local rank_suffix = v.base.id - (card_rank - 2)
 							if rank_suffix < 10 then rank_suffix = tostring(rank_suffix)
 							elseif rank_suffix == 10 then rank_suffix = 'T'
